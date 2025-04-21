@@ -1,0 +1,4 @@
+flask
+tensorflow
+python-dotenv
+requests
