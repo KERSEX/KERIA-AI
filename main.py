@@ -8,6 +8,7 @@ from difflib import get_close_matches
 from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
 import requests
+import webbrowser
 
 try:
     with open("wissen.json", "r", encoding="utf-8") as f:
@@ -154,4 +155,7 @@ def antwort_generieren(eingabe):
     return "Ich bin mir nicht sicher, kannst du das anders formulieren?"
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Flask starten
+    print("[INFO] Starte Flask-App...")
+    webbrowser.open("http://127.0.0.1:5000")  # Öffnet den Browser auf localhost:5000
+    app.run(debug=True, use_reloader=False)  # Deaktiviert das automatische Öffnen des Browsers durch Flask

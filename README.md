@@ -24,9 +24,9 @@ Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Pyt
 pip install -r requirements.txt
 ```
 
-## Konfiguration (env optional)
+## Konfiguration
 
-Erstelle eine `.env` Datei mit: 
+Erstelle eine `.env` Datei mit:
 ```
 API_KEY=dein_google_api_key
 SEARCH_ENGINE_ID=deine_search_engine_id
