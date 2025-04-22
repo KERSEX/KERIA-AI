@@ -26,6 +26,7 @@ pip install -r requirements.txt
 
 ## Konfiguration
 Ich empfehle für alles Notepad++ oder Visual Code Studio
+
 Erstelle eine `.env` Datei mit:
 ```
 API_KEY=dein_google_api_key
