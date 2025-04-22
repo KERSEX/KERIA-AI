@@ -1,6 +1,6 @@
 # KERS AI Alpha - Deutschsprachiger KI-Chatbot - Windows 
 
-Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Python mit Flask.
+Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Python mit Flask aber noch in Alpha ohne Models.
 
 ## Features
 
