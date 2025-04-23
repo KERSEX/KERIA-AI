@@ -34,8 +34,10 @@ SEARCH_ENGINE_ID=deine_search_engine_id
  ```
 Du bekommst den Key und die ID so:
 Besuche die Website: https://programmablesearchengine.google.com/about/
+
 Drücke Jetzt starten>Hinzufügen>Beliebiger Name>Im gesamten Web suchen>Erstellen>Anpassen>
 Suchmaschinen-ID=SEARCH_ENGINE_ID
+
 Runter scrollen zu Programmatischer Zugriff> Jetzt starten drücken>Schlüssel anfordern> Enter new project name>Next>Show Key
 Your API KEY=API_KEY
 
