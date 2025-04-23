@@ -48,7 +48,7 @@ Führe aus:
 ```bash
 python main.py
 ```
-Der Server startet auf Port 5000.
+Der Server startet auf Port 5000 und auf der IP localhost:5000.
 
 ## Projektstruktur
 
