@@ -25,7 +25,9 @@ pip install -r requirements.txt
 ```
 
 ## Konfiguration
-Ich empfehle für alles Notepad++ oder Visual Code Studio
+Ich empfehle zum bearbeiten und erstellen Notepad++ oder Visual Code Studio
+
+
 
 Bearbeite die `API.env` Datei und ersetze durch das richtige:
 
