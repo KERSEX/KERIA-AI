@@ -44,10 +44,12 @@ Der Server startet auf Port 5000.
 ## Projektstruktur
 
 ```
-├── main.py           # Hauptanwendung
-├── templates/        # HTML Templates
+├── main.py          # Hauptanwendung
+├── templates/       # HTML Templates
 ├── static/          # Statische Dateien
 ├── wissen.json      # Wissensdatenbank
+├── GitHub.url       # Das Projekt
+├── run.bat          # Starter
 └── requirements.txt # Abhängigkeiten
 ```
 
