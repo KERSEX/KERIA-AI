@@ -27,7 +27,8 @@ pip install -r requirements.txt
 ## Konfiguration
 Ich empfehle für alles Notepad++ oder Visual Code Studio
 
-Erstelle eine `.env` Datei mit:
+Bearbeite die `API.env` Datei und ersetze durch das richtige:
+(der KEY sollte deutlich länger sein als die ID):
 ```
 API_KEY=dein_google_api_key
 SEARCH_ENGINE_ID=deine_search_engine_id
