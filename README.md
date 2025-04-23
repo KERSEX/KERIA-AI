@@ -28,6 +28,7 @@ pip install -r requirements.txt
 Ich empfehle für alles Notepad++ oder Visual Code Studio
 
 Bearbeite die `API.env` Datei und ersetze durch das richtige:
+
 (der KEY sollte deutlich länger sein als die ID):
 ```
 API_KEY=dein_google_api_key
