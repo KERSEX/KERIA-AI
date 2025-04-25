@@ -11,13 +11,16 @@ Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Pyt
 
 ## Technologien
 
-- Python 3.9
+- Python 3.9 
 - Flask
 - HTML/CSS/JavaScript
 - Google Custom Search API
 
 ## Installation
-
+Vorbereitung 
+Lade Python 3.9 runter und installiere es
+Einfacher Download und Installation über Microsoft Store: 
+https://apps.microsoft.com/detail/9P7QFQMJRFP7?hl=neutral&gl=DE&ocid=pdpshare
 1. Klone das Repository
 2. Installiere die Abhängigkeiten:
 ```bash
@@ -26,7 +29,6 @@ pip install -r requirements.txt
 
 ## Konfiguration
 Ich empfehle zum bearbeiten und erstellen Notepad++ oder Visual Code Studio
-
 
 
 Bearbeite die `API.env` Datei und ersetze durch das richtige:
