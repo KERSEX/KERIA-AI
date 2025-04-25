@@ -11,7 +11,7 @@ Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Pyt
 
 ## Technologien
 
-- Python 3.10
+- Python 3.9
 - Flask
 - HTML/CSS/JavaScript
 - Google Custom Search API
