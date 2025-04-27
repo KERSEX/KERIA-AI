@@ -9,21 +9,16 @@ from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
 import requests
 import webbrowser
+from llama_cpp import Llama
 
-try:
-    with open("wissen.json", "r", encoding="utf-8") as f:
-        wissen = json.load(f)
-except json.JSONDecodeError as e:
-    print(f"❌ Fehler in der JSON-Datei: {e}")
-    wissen = {}
-    
-# ==== Umgebungsvariablen & Logging ====
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Nur Warnungen und Fehler anzeigen
-# os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Optional: oneDNN deaktivieren
+# ==== Konfiguration ====
+MODELL_VERZEICHNIS = "K:/KERS - Kopie/models/"
+AKTUELLES_MODELL = "Teuken-7B-instruct-commercial-v0.4.Q6_K.gguf"  # Standardmodell
 
+# ==== Logging & Umgebungsvariablen ====
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 logging.basicConfig(filename='error.log', level=logging.ERROR,
                     format='%(asctime)s %(levelname)s:%(message)s')
-
 load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
@@ -34,79 +29,44 @@ LOG_DATEI = "chat_log.txt"
 USER_DATA_DATEI = "user_data.json"
 FEEDBACK_DATEI = "feedback.json"
 
-# ==== Google-Suche ====
-def internet_suche(query):
-    try:
-        url = f"https://www.googleapis.com/customsearch/v1?q={query}&key={API_KEY}&cx={SEARCH_ENGINE_ID}"
-        response = requests.get(url)
-        response.raise_for_status()  # Überprüft auf HTTP-Fehler
-        data = response.json()
-        
-        if "items" in data:
-            return "\n\n".join([
-                f"{item['title']}\n{item.get('snippet', 'Keine Beschreibung verfügbar.')}\nLink: {item['link']}"
-                for item in data['items'][:3]
-            ]) or "Keine relevanten Ergebnisse gefunden."
-        else:
-            logging.error(f"Keine 'items' in der API-Antwort gefunden: {data}")
-            return "Es wurden keine Ergebnisse gefunden."
-    
-    except requests.RequestException as e:
-        logging.error(f"Fehler bei der Internet-Suche: {e}")
-        return f"Fehler bei der Internet-Suche: {str(e)}"
-    except Exception as e:
-        logging.error(f"Allgemeiner Fehler bei der Internet-Suche: {e}")
-        return f"Allgemeiner Fehler: {str(e)}"
+# ==== Modell laden ====
+def lade_llm(modell_name):
+    modell_pfad = os.path.join(MODELL_VERZEICHNIS, modell_name)
+    if not os.path.exists(modell_pfad):
+        raise FileNotFoundError(f"Modell nicht gefunden: {modell_pfad}")
+    return Llama(
+        model_path=modell_pfad,
+        n_ctx=2048,
+        n_threads=os.cpu_count() or 4,
+        use_mlock=True
+    )
 
-# ==== Logging und Speicherung ====
-def log_chat(eingabe, antwort):
-    try:
-        with open(LOG_DATEI, "a", encoding="utf-8") as log_file:
-            log_file.write(f"{datetime.now()} - Du: {eingabe}\nKI: {antwort}\n\n")
-    except Exception as e:
-        logging.error(f"Fehler beim Loggen des Chats: {e}")
+llm = lade_llm(AKTUELLES_MODELL)
 
-def speichere_feedback(eingabe, feedback):
-    try:
-        feedback_data = lade_feedback()
-        feedback_data.append({"eingabe": eingabe, "feedback": feedback, "zeit": str(datetime.now())})
-        with open(FEEDBACK_DATEI, "w", encoding="utf-8") as file:
-            json.dump(feedback_data, file, indent=4, ensure_ascii=False)
-    except Exception as e:
-        logging.error(f"Fehler beim Speichern des Feedbacks: {e}")
+# ==== Modelle finden ====
+def finde_modelle(pfad=MODELL_VERZEICHNIS):
+    erlaubte_endungen = (".gguf", ".safetensors")
+    return [f for f in os.listdir(pfad) if f.endswith(erlaubte_endungen)]
 
-# ==== Dateioperationen ====
-def lade_feedback():
-    return json.load(open(FEEDBACK_DATEI, "r", encoding="utf-8")) if os.path.exists(FEEDBACK_DATEI) else []
-
-def lade_user_data():
-    return json.load(open(USER_DATA_DATEI, "r", encoding="utf-8")) if os.path.exists(USER_DATA_DATEI) else {}
-
-def speichere_name(name):
-    user_data = lade_user_data()
-    user_data["name"] = name
-    with open(USER_DATA_DATEI, "w", encoding="utf-8") as file:
-        json.dump(user_data, file, indent=4, ensure_ascii=False)
-
-def lade_wissen():
-    return json.load(open(WISSEN_DATEI, "r", encoding="utf-8")) if os.path.exists(WISSEN_DATEI) else {}
-
-# ==== KI-Modell (Keras, ohne Warnung) ====
-model = tf.keras.Sequential([
-    tf.keras.layers.Input(shape=(10,)),
-    tf.keras.layers.Dense(64, activation='relu'),
-    tf.keras.layers.Dense(64, activation='relu'),
-    tf.keras.layers.Dense(1, activation='sigmoid')
-])
-
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+# ==== Wissen laden ====
+try:
+    with open(WISSEN_DATEI, "r", encoding="utf-8") as f:
+        wissen = json.load(f)
+except json.JSONDecodeError as e:
+    print(f"❌ Fehler in der JSON-Datei: {e}")
+    wissen = {}
 
 # ==== Flask App ====
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        modelle = finde_modelle()
+        return render_template('index.html', modelle=modelle)
+    except Exception as e:
+        logging.error(f"Fehler beim Abrufen der Modelle: {e}")
+        return "Fehler beim Laden der Modelle", 500
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -127,7 +87,48 @@ def search():
     results = internet_suche(query)
     return jsonify({"ergebnisse": results})
 
-# ==== Antwortgenerator ====
+@app.route('/modell', methods=['POST'])
+def modell_wechseln():
+    global llm, AKTUELLES_MODELL
+    try:
+        data = request.json
+        modell_name = data.get("modell")
+        llm = lade_llm(modell_name)
+        AKTUELLES_MODELL = modell_name
+        return jsonify({"nachricht": f"✅ Modell '{modell_name}' erfolgreich geladen."})
+    except Exception as e:
+        logging.error(f"Fehler beim Modellwechsel: {e}")
+        return jsonify({"nachricht": f"❌ Fehler: {str(e)}"}), 500
+
+# ==== Funktionen ====
+def internet_suche(query):
+    try:
+        url = f"https://www.googleapis.com/customsearch/v1?q={query}&key={API_KEY}&cx={SEARCH_ENGINE_ID}"
+        response = requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+        if "items" in data:
+            return "\n\n".join([
+                f"{item['title']}\n{item.get('snippet', 'Keine Beschreibung verfügbar.')}\nLink: {item['link']}"
+                for item in data['items'][:3]
+            ]) or "Keine relevanten Ergebnisse gefunden."
+        else:
+            logging.error(f"Keine 'items' in der API-Antwort gefunden: {data}")
+            return "Es wurden keine Ergebnisse gefunden."
+    except requests.RequestException as e:
+        logging.error(f"Fehler bei der Internet-Suche: {e}")
+        return f"Fehler bei der Internet-Suche: {str(e)}"
+
+
+def frage_llm(prompt):
+    try:
+        response = llm(prompt, max_tokens=200, stop=["</s>"])
+        return response["choices"][0]["text"].strip()
+    except Exception as e:
+        logging.error(f"LLM-Fehler: {e}")
+        return "Es gab ein Problem beim Generieren der Antwort."
+
+
 def antwort_generieren(eingabe):
     eingabe = eingabe.strip().lower()
     wissen = lade_wissen()
@@ -143,7 +144,6 @@ def antwort_generieren(eingabe):
         speichere_feedback(eingabe, eingabe.replace("feedback:", "").strip())
         return "Danke für dein Feedback!"
 
-    # Überprüfen, ob die Eingabe mit "suche nach" beginnt
     if eingabe.startswith("suche nach "):
         query = eingabe.replace("suche nach ", "").strip()
         results = internet_suche(query)
@@ -152,10 +152,44 @@ def antwort_generieren(eingabe):
     if matches:
         return f"Hallo {name}, {random.choice(wissen[matches[0]])}"
 
-    return "Ich bin mir nicht sicher, kannst du das anders formulieren?"
+    return frage_llm(f"User: {eingabe}\nAssistant:")
 
+
+def log_chat(eingabe, antwort):
+    try:
+        with open(LOG_DATEI, "a", encoding="utf-8") as log_file:
+            log_file.write(f"{datetime.now()} - Du: {eingabe}\nKI: {antwort}\n\n")
+    except Exception as e:
+        logging.error(f"Fehler beim Loggen des Chats: {e}")
+
+
+def speichere_feedback(eingabe, feedback):
+    try:
+        feedback_data = lade_feedback()
+        feedback_data.append({"eingabe": eingabe, "feedback": feedback, "zeit": str(datetime.now())})
+        with open(FEEDBACK_DATEI, "w", encoding="utf-8") as file:
+            json.dump(feedback_data, file, indent=4, ensure_ascii=False)
+    except Exception as e:
+        logging.error(f"Fehler beim Speichern des Feedbacks: {e}")
+
+
+def lade_feedback():
+    return json.load(open(FEEDBACK_DATEI, "r", encoding="utf-8")) if os.path.exists(FEEDBACK_DATEI) else []
+
+def lade_user_data():
+    return json.load(open(USER_DATA_DATEI, "r", encoding="utf-8")) if os.path.exists(USER_DATA_DATEI) else {}
+
+def speichere_name(name):
+    user_data = lade_user_data()
+    user_data["name"] = name
+    with open(USER_DATA_DATEI, "w", encoding="utf-8") as file:
+        json.dump(user_data, file, indent=4, ensure_ascii=False)
+
+def lade_wissen():
+    return json.load(open(WISSEN_DATEI, "r", encoding="utf-8")) if os.path.exists(WISSEN_DATEI) else {}
+
+# ==== App starten ====
 if __name__ == '__main__':
-    # Flask starten
     print("[INFO] Starte Flask-App...")
-    webbrowser.open("http://127.0.0.1:5000")  # Öffnet den Browser auf localhost:5000
-    app.run(debug=True, use_reloader=False)  # Deaktiviert das automatische Öffnen des Browsers durch Flask
+    webbrowser.open("http://127.0.0.1:5000")
+    app.run(debug=True, use_reloader=False)

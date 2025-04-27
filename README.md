@@ -1,6 +1,6 @@
-# KERS AI Alpha - Deutschsprachiger KI-Chatbot - Windows 
+# KERS AI Alpha - Deutschsprachiger KI-Chatbot
 
-Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Python mit Flask aber noch in Alpha ohne Models.
+Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Python mit Flask.
 
 ## Features
 
@@ -11,16 +11,13 @@ Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Pyt
 
 ## Technologien
 
-- Python 3.9 
+- Python 3.10
 - Flask
 - HTML/CSS/JavaScript
 - Google Custom Search API
 
 ## Installation
-Vorbereitung 
-Lade Python 3.9 runter und installiere es
-Einfacher Download und Installation über Microsoft Store: 
-https://apps.microsoft.com/detail/9P7QFQMJRFP7?hl=neutral&gl=DE&ocid=pdpshare
+
 1. Klone das Repository
 2. Installiere die Abhängigkeiten:
 ```bash
@@ -28,25 +25,12 @@ pip install -r requirements.txt
 ```
 
 ## Konfiguration
-Ich empfehle zum bearbeiten und erstellen Notepad++ oder Visual Code Studio
 
-
-Bearbeite die `API.env` Datei und ersetze durch das richtige:
-
-(der KEY sollte deutlich länger sein als die ID):
+Erstelle eine `.env` Datei mit:
 ```
 API_KEY=dein_google_api_key
 SEARCH_ENGINE_ID=deine_search_engine_id
- ```
-Du bekommst den Key und die ID so:
-Besuche die Website: https://programmablesearchengine.google.com/about/
-
-Drücke Jetzt starten>Hinzufügen>Beliebiger Name>Im gesamten Web suchen>Erstellen>Anpassen>
-Suchmaschinen-ID=SEARCH_ENGINE_ID
-
-Runter scrollen zu Programmatischer Zugriff> Jetzt starten drücken>Schlüssel anfordern> Enter new project name>Next>Show Key
-Your API KEY=API_KEY
-
+```
 
 ## Starten
 
@@ -54,17 +38,15 @@ Führe aus:
 ```bash
 python main.py
 ```
-Der Server startet auf Port 5000 und auf der IP localhost:5000.
+Der Server startet auf Port 5000.
 
 ## Projektstruktur
 
 ```
-├── main.py          # Hauptanwendung
-├── templates/       # HTML Templates
+├── main.py           # Hauptanwendung
+├── templates/        # HTML Templates
 ├── static/          # Statische Dateien
 ├── wissen.json      # Wissensdatenbank
-├── GitHub.url       # Das Projekt
-├── run.bat          # Starter
 └── requirements.txt # Abhängigkeiten
 ```
 
