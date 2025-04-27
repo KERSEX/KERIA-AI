@@ -54,13 +54,13 @@ Der Server startet dann auf den Port 5000 und auf Localhost:5000.
 ├── 📁 static/                # Statische Dateien (Sound- und Bilderdateien)
 ├── 📁 models/                # KI-Modelle und zugehörige Dateien
 ├── 📁 venv/                  # Virtuelle Python-Umgebung
+├── 📄 run.bat                # Start- und Installationsskript für die Anwendung
 ├── 📄 main.py                # Hauptanwendung
-├── 📄 requirements.txt       # Python-Abhängigkeiten
 ├── 📄 API.env                # Konfiguration für die Google Search API
-├── 📄 run.bat                # Startskript für die Anwendung
 ├── 📄 wissen.json            # Wissensdatenbank
 ├── 📄 chat_log.txt           # Aufzeichnung der Chat-Interaktionen
-└── 📄 error.txt              # Fehlerprotokolle
+├── 📄 error.txt              # Fehlerprotokolle
+└── 📄 requirements.txt       # Python-Abhängigkeiten
 ``` 
 
 ## Features im Detail
