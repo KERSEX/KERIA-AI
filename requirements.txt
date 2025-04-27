@@ -2,3 +2,4 @@ Flask
 tensorflow
 python-dotenv
 requests
+llama-cpp-python
