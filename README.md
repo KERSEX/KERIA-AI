@@ -49,15 +49,19 @@ Der Server startet dann auf den Port 5000 und auf Localhost:5000.
 ## Projektstruktur
 
 ```
-├── main.py           # Hauptanwendung
-├── templates/        # HTML Templates
-├── static/           # Statische Dateien
-├── wissen.json       # Wissensdatenbank
-├── API.env           # Config für die Google Search API
-├── run.bat           # Zum Starten des Codes
-├──       #
-└── requirements.txt  # Abhängigkeiten
-```
+📁 Projektverzeichnis
+├── 📁 templates/             # HTML-Templates für die Benutzeroberfläche
+├── 📁 static/                # Statische Dateien (CSS, JavaScript, Bilder)
+├── 📁 models/                # KI-Modelle und zugehörige Dateien
+├── 📁 venv/                  # Virtuelle Python-Umgebung
+├── 📄 main.py                # Hauptanwendung
+├── 📄 requirements.txt       # Python-Abhängigkeiten
+├── 📄 API.env                # Konfiguration für die Google Search API
+├── 📄 run.bat                # Startskript für die Anwendung
+├── 📄 wissen.json            # Wissensdatenbank
+├── 📄 chat_log.txt           # Aufzeichnung der Chat-Interaktionen
+└── 📄 error.txt              # Fehlerprotokolle
+``` 
 
 ## Features im Detail
 
