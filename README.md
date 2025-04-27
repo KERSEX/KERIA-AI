@@ -79,6 +79,7 @@ Der Server startet auf Port 5000 und Localhost:5000.
 Entwickelt von WHO_KERS
 Discord: kers_ex
 
+MADE IN GERMANY
 ## Lizenz
 
 Alle Rechte vorbehalten
