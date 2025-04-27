@@ -1,4 +1,4 @@
-# KERS AI Alpha - Deutschsprachiger KI-Chatbot
+# KERS AI Alpha - Deutschsprachiger KI-Chatbot - Windows
 
 Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Python mit Flask.
 
@@ -64,7 +64,7 @@ Der Server startet auf Port 5000 und Localhost:5000.
 ## Features im Detail
 
 ### Chatbot
-- Antworten aus der Wissensdatenbank
+- Antworten aus der Wissensdatenbank und Modellen
 - Internetsuche bei unbekannten Fragen mit "Suche nach" wenn es eingerichtet ist
 - Feedback-System und merkt sich den Namen wenn "Mein Name ist [Name]"
 
