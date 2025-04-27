@@ -17,7 +17,7 @@ Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Pyt
 - Google Custom Search API
 
 ## Installation
-Wenn dies noch nicht getan ist, lade Python 3.9 runter.          
+Wenn dies noch nicht getan ist, lade Python 3.9 runter.                    
 https://apps.microsoft.com/detail/9P7QFQMJRFP7?hl=neutral&gl=DE&ocid=pdpshare
 
 
