@@ -20,15 +20,9 @@ Ein web-basierter KI-Chatbot mit moderner Benutzeroberfläche, entwickelt in Pyt
 Wenn dies noch nicht getan ist, lade Python 3.9 runter.                    
 https://apps.microsoft.com/detail/9P7QFQMJRFP7?hl=neutral&gl=DE&ocid=pdpshare
 
+Lade die .zip datei runter und entpacke diese.
 
-1. Klone/Lade das Repository
-2. Installiere die Abhängigkeiten:
-```bash
-pip install -r requirements.txt
-```
-
-## Konfiguration
-Google Custom Search API Optional:
+## Konfiguration von Google Custom Search Optional
 Besuche diese Website: https://programmablesearchengine.google.com/about/
 Drücke "Jetzt Starten", dann "Hinzufügen".
 Gebe der "Suchmaschine" einen beliebigen Namen, danach "Im gesamten Web suchen" und erstellen.
@@ -39,7 +33,8 @@ Nun der API_KEY
 Scrolle runter bis zu Programmatischer Zugriff und drücke "Jetzt Starten".
 Nun fordere den Schlüssel bei den blauen Button an "Schlüssel anfordern", nun erscheint ein Fenster mit "Enter new project name" und benenne es beliebig und drücke auf Next.
 Nachdem laden steht dort "SHOW KEY", drücke "SHOW KEY" und kopiere diesen Key bei "API_KEY=" ein.
-Bearbeite die `.env` Datei mit:
+
+Bearbeite die `.env` Datei mit einem Editor.
 ```
 API_KEY=dein_google_api_key
 SEARCH_ENGINE_ID=deine_search_engine_id
@@ -49,7 +44,7 @@ SEARCH_ENGINE_ID=deine_search_engine_id
 
 Doppelklick auf die run.bat datei, diese erstellt automatisch einen venv in Python 3.9 und installiert die Abhängigkeiten.
 
-Der Server startet auf Port 5000 und Localhost:5000.
+Der Server startet dann auf den Port 5000 und auf Localhost:5000.
 
 ## Projektstruktur
 
@@ -58,6 +53,9 @@ Der Server startet auf Port 5000 und Localhost:5000.
 ├── templates/        # HTML Templates
 ├── static/           # Statische Dateien
 ├── wissen.json       # Wissensdatenbank
+├── API.env           # Config für die Google Search API
+├── run.bat           # Zum Starten des Codes
+├──       #
 └── requirements.txt  # Abhängigkeiten
 ```
 
