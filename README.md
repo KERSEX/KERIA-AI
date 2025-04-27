@@ -47,20 +47,18 @@ SEARCH_ENGINE_ID=deine_search_engine_id
 
 ## Starten
 
-Führe aus:
-```bash
-python main.py
-```
-Der Server startet auf Port 5000.
+Doppelklick auf die run.bat datei, diese erstellt automatisch einen venv in Python 3.9 und installiert die Abhängigkeiten.
+
+Der Server startet auf Port 5000 und Localhost:5000.
 
 ## Projektstruktur
 
 ```
 ├── main.py           # Hauptanwendung
 ├── templates/        # HTML Templates
-├── static/          # Statische Dateien
-├── wissen.json      # Wissensdatenbank
-└── requirements.txt # Abhängigkeiten
+├── static/           # Statische Dateien
+├── wissen.json       # Wissensdatenbank
+└── requirements.txt  # Abhängigkeiten
 ```
 
 ## Features im Detail
@@ -68,7 +66,7 @@ Der Server startet auf Port 5000.
 ### Chatbot
 - Antworten aus der Wissensdatenbank
 - Internetsuche bei unbekannten Fragen mit "Suche nach" wenn es eingerichtet ist
-- Feedback-System
+- Feedback-System und merkt sich den Namen wenn "Mein Name ist [Name]"
 
 ### Benutzeroberfläche
 - Dunkles Design
