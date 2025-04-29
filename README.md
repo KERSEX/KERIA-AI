@@ -50,9 +50,9 @@ Der Server startet dann auf den Port 5000 und auf Localhost:5000.
 
 ```
 📁 Projektverzeichnis
-├── 📁 templates/             # HTML-Templates für die Benutzeroberfläche
-├── 📁 static/                # Statische Dateien (Sound- und Bilderdateien)
 ├── 📁 models/                # KI-Modelle und zugehörige Dateien
+├── 📁 static/                # Statische Dateien (Sound- und Bilderdateien)
+├── 📁 templates/             # HTML-Templates für die Benutzeroberfläche
 ├── 📁 venv/                  # Virtuelle Python-Umgebung
 ├── 📄 run.bat                # Start- und Installationsskript für die Anwendung
 ├── 📄 main.py                # Hauptanwendung
