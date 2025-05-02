@@ -22,7 +22,7 @@ https://apps.microsoft.com/detail/9P7QFQMJRFP7?hl=neutral&gl=DE&ocid=pdpshare
 
 Lade die .zip datei runter und entpacke diese.
 
-## Konfiguration von Google Custom Search Optional
+## Optionale Konfiguration von Google Custom Search
 Besuche diese Website: https://programmablesearchengine.google.com/about/
 Drücke "Jetzt Starten", dann "Hinzufügen".
 Gebe der "Suchmaschine" einen beliebigen Namen, danach "Im gesamten Web suchen" und erstellen.
