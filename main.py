@@ -12,7 +12,7 @@ import webbrowser
 from llama_cpp import Llama
 
 # ==== Konfiguration ====
-MODELL_VERZEICHNIS = "K:/KERS - Kopie/models/"
+MODELL_VERZEICHNIS = "models/"
 AKTUELLES_MODELL = "Teuken-7B-instruct-commercial-v0.4.Q6_K.gguf"  # Standardmodell
 
 # ==== Logging & Umgebungsvariablen ====
@@ -33,15 +33,29 @@ FEEDBACK_DATEI = "feedback.json"
 def lade_llm(modell_name):
     modell_pfad = os.path.join(MODELL_VERZEICHNIS, modell_name)
     if not os.path.exists(modell_pfad):
-        raise FileNotFoundError(f"Modell nicht gefunden: {modell_pfad}")
-    return Llama(
-        model_path=modell_pfad,
-        n_ctx=2048,
-        n_threads=os.cpu_count() or 4,
-        use_mlock=True
-    )
+        print(f"[WARNUNG] ❌ Modell nicht gefunden: {modell_pfad}")
+        # Modell nicht gefunden, mit Wissen aus der Datei weiterarbeiten
+        print("[INFO] Nutze Wissen aus der 'wissen.json' Datei.")
+        return None  # Kein Modell, aber Wissen kann weiterhin genutzt werden
+    try:
+        return Llama(
+            model_path=modell_pfad,
+            n_ctx=2048,
+            n_threads=os.cpu_count() or 4,
+            use_mlock=True
+        )
+    except Exception as e:
+        print(f"[FEHLER] Fehler beim Laden des Modells: {e}")
+        logging.error(f"Fehler beim Laden des Modells: {e}")
+        return None
 
+# Modell prüfen und auf Fehler reagieren
 llm = lade_llm(AKTUELLES_MODELL)
+if llm:
+    print(f"[INFO] Modell '{AKTUELLES_MODELL}' erfolgreich geladen.")
+else:
+    print("[INFO] Das System läuft ohne Modell und nutzt stattdessen Wissen aus der 'wissen.json'.")
+
 
 # ==== Modelle finden ====
 def finde_modelle(pfad=MODELL_VERZEICHNIS):
@@ -121,13 +135,14 @@ def internet_suche(query):
 
 
 def frage_llm(prompt):
+    if llm is None:
+        return "⚠️ Das Sprachmodell konnte nicht geladen werden. Bitte stelle sicher, dass es im models-Ordner liegt."
     try:
         response = llm(prompt, max_tokens=200, stop=["</s>"])
         return response["choices"][0]["text"].strip()
     except Exception as e:
         logging.error(f"LLM-Fehler: {e}")
         return "Es gab ein Problem beim Generieren der Antwort."
-
 
 def antwort_generieren(eingabe):
     eingabe = eingabe.strip().lower()
