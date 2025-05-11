@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KERS AI Alpha</title>
+  <title>KERIA AI Alpha</title>
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -212,10 +212,11 @@
 }
 
 /* Sidebar ausgefahren */
-.sidebar.expanded {
-  width: 260px;
-  transition: width 0.5s ease;
+#sidebar.expanded {
+  left: 0; /* Sidebar auf der linken Seite anzeigen */
+  width: 250px; /* Oder eine andere Breite nach Bedarf */
 }
+
 
 /* Menü-Knopf */
 .sidebar-header {
@@ -278,9 +279,111 @@
   transform: translateX(0);
 }
 
+/*Close Button for Menü Options*/
+.info-content {
+  position: relative; /* Damit wir den Schließen-Button positionieren können */
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.info-content.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.close-info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 16px;
+}
+
+.close-info:hover {
+  background-color: #ff3333;
+  transform: scale(1.1);
+}
+
+
+
+
+.model-selection-container {
+  margin: 30px auto;
+  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#modellForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#modellForm select {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #000;
+  font-size: 16px;
+  border: 1px solid #1E1F22;
+  min-width: 250px;
+}
+
+#modellForm button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#modellForm button:hover {
+  background-color: #00ffff;
+  color: #121214;
+  transform: translateY(-2px);
+}
+
+#modellForm label {
+  font-size: 16px;
+  margin-right: 10px;
+}
   </style>
 </head>
 <body>
+  <div id="warning-banner" style="background-color: #ff9800; color: black; padding: 10px 40px 10px 10px; text-align: center; margin: 0 auto 20px; border-radius: 8px; max-width: 60%; position: relative; display: flex; align-items: center; justify-content: center;">
+    <div>
+      <strong>Hinweis:</strong> Diese Anwendung befindet sich in der Alpha-Phase. Einige Elemente könnten falsch angeordnet sein oder nicht korrekt dargestellt werden.
+    </div>
+    <button onclick="this.parentElement.style.display='none';" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%; background-color: rgba(0,0,0,0.2); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.3s;" onmouseover="this.style.backgroundColor='#ff3333'; this.style.transform='translateY(-50%) scale(1.2)'; this.style.boxShadow='0 0 8px rgba(255,0,0,0.5)';" onmouseout="this.style.backgroundColor='rgba(0,0,0,0.2)'; this.style.transform='translateY(-50%) scale(1)'; this.style.boxShadow='none';">✕</button>
+  </div>
+
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header" onclick="toggleSidebar()">☰ Menü</div>
     <a href="#" onclick="toggleInfo(5)">
@@ -293,9 +396,8 @@
       <span class="icon">ℹ️</span><span class="text">Über das Projekt</span>
     </a>
   </div>  
-
-  <h1>Willkommen bei KERS AI Alpha</h1>
-  <p>Gib eine Frage ein und drücke Enter oder drücke auf Senden:</p>  
+  <h1>Willkommen bei der Closed Alpha</h1>
+  <p>Gib eine Frage ein und drücke Enter oder auf Senden:</p>  
   <form id="chat-form">
     <input type="text" name="eingabe" id="user-input" placeholder="Gib deine Frage ein..." required />
     <div class="button-container">
@@ -303,11 +405,12 @@
     </div>
   </form>
 
-  <div class="spinner" id="loading-spinner"></div>
   <textarea id="chat-output" readonly></textarea>
   <p id="loading-msg" style="display:none;">⏳ Wird gesendet...</p>
+  <div class="spinner" id="loading-spinner"></div>
 
   <div id="info-5" class="info-content">
+    <button class="close-info" onclick="closeInfo(5)">✕</button>
     <h2>Datenschutz</h2>
     <p>
       Dieses Programm speichert und verarbeitet Daten gemäß der Datenschutzrichtlinie.<br>
@@ -319,115 +422,260 @@
   </div>
 
   <div id="info-6" class="info-content">
-    <h2>Nutzungsbedingungen</h2>
-    <p>Hier werden bald die Nutzungsbedingungen veröffentlicht.</p>
+    <button class="close-info" onclick="closeInfo(6)">✕</button>
+    <h2>Nutzungsbedingungen für KERIA AI Alpha</h2>
+    <p>
+ 1. Einführung <br>
+Diese Nutzungsbedingungen regeln die Nutzung der KERIA AI Alpha-Anwendung ("Anwendung"), entwickelt als persönliches Projekt zur Förderung deutschsprachiger KI-Anwendungen.<br><br>
+
+ 2. Akzeptanz der Bedingungen<br>
+Durch die Nutzung der Anwendung erklären Sie sich mit diesen Nutzungsbedingungen einverstanden. Falls Sie mit den Bedingungen nicht einverstanden sind, nutzen Sie die Anwendung bitte nicht.<br><br>
+
+ 3. Experimenteller Status<br>
+KERIA AI Alpha befindet sich in einer frühen Entwicklungsphase (Alpha). Die Funktionalität kann unvollständig oder fehlerhaft sein. Die Anwendung wird ohne jegliche Garantien oder Zusicherungen bereitgestellt.<br><br>
+
+ 4. Nutzungsbeschränkungen<br>
+Sie verpflichten sich:<br>
+- Die Anwendung nicht für illegale, schädliche oder betrügerische Zwecke zu nutzen<br>
+- Keine anstößigen, beleidigenden oder unangemessenen Inhalte zu generieren<br>
+- Keine Maßnahmen zu ergreifen, die die Funktionalität der Anwendung beeinträchtigen<br>
+- Die Anwendung nicht zu dekompilieren oder zu modifizieren<br><br>
+
+ 5. Geistiges Eigentum<br>
+Alle Rechte an der Anwendung, einschließlich Quellcode, Design und Logo, verbleiben beim Entwickler. Die verwendeten Open-Source-Komponenten unterliegen ihren jeweiligen Lizenzen.<br><br>
+
+ 6. Haftungsausschluss<br>
+Die Anwendung wird "wie besehen" ohne jegliche Gewährleistung bereitgestellt. Der Entwickler übernimmt keine Haftung für direkte oder indirekte Schäden, die aus der Nutzung der Anwendung entstehen.<br><br>
+
+ 7. KI-generierte Inhalte<br>
+Die von der KI generierten Antworten:<br>
+- Können ungenau, unvollständig oder falsch sein<br>
+- Sollten nicht als professionelle Beratung verstanden werden<br>
+- Spiegeln nicht die Meinungen des Entwicklers wider<br><br>
+
+ 8. Änderungen der Bedingungen<br>
+Der Entwickler behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Wesentliche Änderungen werden innerhalb der Anwendung bekanntgegeben.<br><br>
+
+ 9. Kontakt<br>
+Bei Fragen zu diesen Nutzungsbedingungen kontaktieren Sie bitte den Entwickler über Discord: kers_ex<br><br>
+
+ 10. Schlussbestimmungen<br>
+Diese Nutzungsbedingungen unterliegen deutschem Recht. Sollten einzelne Bestimmungen unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.<br><br><br>
+
+Letzte Aktualisierung: 08.05.2025</p>
   </div>
 
   <div id="info-7" class="info-content">
+    <button class="close-info" onclick="closeInfo(7)">✕</button>
     <h2>Über das Projekt</h2>
-    <p>
-      Dieses Projekt entsteht aus dem Wunsch, eigene Erfahrungen im Bereich künstlicher Intelligenz zu sammeln und eine deutschsprachige KI zu entwickeln.<br>
+    <p>Dieses Projekt entsteht aus dem Wunsch, eigene Erfahrungen im Bereich künstlicher Intelligenz zu sammeln und eine deutschsprachige KI zu entwickeln.<br>
       Als Einzelentwickler ist es mein Ziel, Teil der wachsenden KI-Szene im deutschsprachigen Raum zu sein.
     </p>
+  </div>
+
+  <div class="model-selection-container">
+    <h3>Modellauswahl</h3>
+    <p>Aktuell geladenes Modell: <strong id="current-model">{{ aktuelles_modell }}</strong></p>
+    <form id="modellForm">
+      <label for="modell">Modell wechseln:</label>
+      <select id="modell" name="modell">
+        <!-- Wird dynamisch gefüllt -->
+      </select>
+      <button type="submit">Modell laden</button>
+    </form>
   </div>
 
   <button type="button" id="close-button">❌ Schließen</button>
 
   <audio id="send-sound" src="static/send.mp3" preload="auto"></audio>
 
-  <script>
-    function toggleInfo(nr) {
-      document.querySelectorAll('.info-content').forEach(el => el.classList.remove('show'));
-      const info = document.getElementById(`info-${nr}`);
-      if (info) info.classList.add('show');
-    }
-  
-    const sendenButton = document.querySelector("button[type='submit']");
-    const loadingMsg = document.getElementById("loading-msg");
-    const spinner = document.getElementById("loading-spinner");
-  
-    document.getElementById("chat-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const eingabe = document.getElementById("user-input").value.trim();
-      const chatOutput = document.getElementById("chat-output");
-  
-      if (!eingabe) {
-        alert("Bitte eine Eingabe tätigen!");
-        return;
-      }
-  
-      sendenButton.disabled = true;
-      loadingMsg.style.display = "block";
-      spinner.style.display = "block";
-  
-      fetch('/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eingabe: eingabe })
-      })
-      .then(response => response.json())
-      .then(data => {
-        chatOutput.value += `Du: ${eingabe}\nKI: ${data.antwort}\n\n`;
-        document.getElementById("user-input").value = "";
-        chatOutput.scrollTop = chatOutput.scrollHeight;
-  
-        // Sound
-        document.getElementById("send-sound").play().catch(e => {
-          console.warn("Ton konnte nicht abgespielt werden:", e);
-        });
-  
-        // Sprachausgabe deaktiviert
-        // const utterance = new SpeechSynthesisUtterance(data.antwort);
-        // speechSynthesis.speak(utterance);
-      })
-      .catch(error => {
-        console.error("Fehler beim Senden der Anfrage:", error);
-        alert("Es gab ein Problem mit der Serververbindung.");
-      })
-      .finally(() => {
-        sendenButton.disabled = false;
-        loadingMsg.style.display = "none";
-        spinner.style.display = "none";
-      });
-    });
-  
-    document.getElementById("close-button").addEventListener("click", () => {
-      document.body.style.display = "none";
-    });
-  
-    // Neue Sidebar-Logik
-    let sidebarExpanded = false;
-  
-    const sidebar = document.getElementById("sidebar");
-    const header = sidebar.querySelector('.sidebar-header');
-  
-
-  function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const header = sidebar.querySelector(".sidebar-header");
-
-    // Sidebar umschalten
-    sidebar.classList.toggle("expanded");
-
-    // Menü-Icon rotieren
-    header.classList.add("spin");
-    setTimeout(() => {
-      header.classList.remove("spin");
-    }, 600); // Muss mit der transition-Dauer in .sidebar-header.spin übereinstimmen
+<script>
+  // Funktion zum Umschalten von Informationsinhalten
+  function toggleInfo(nr) {
+    document.querySelectorAll('.info-content').forEach(el => el.classList.remove('show'));
+    const info = document.getElementById(`info-${nr}`);
+    if (info) info.classList.add('show');
   }
 
-  
-    // Sidebar beim Laden einfahren
-    window.addEventListener('DOMContentLoaded', () => {
-      sidebar.style.left = "0";
+  const sendenButton = document.querySelector("button[type='submit']");
+  const loadingMsg = document.getElementById("loading-msg");
+  const spinner = document.getElementById("loading-spinner");
+
+  // Formular-Ereignisbehandlung für den Chat
+  document.getElementById("chat-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const eingabe = document.getElementById("user-input").value.trim();
+    const chatOutput = document.getElementById("chat-output");
+
+    if (!eingabe) {
+      alert("Bitte eine Eingabe tätigen!");
+      return;
+    }
+
+    sendenButton.disabled = true;
+    loadingMsg.style.display = "block";
+    spinner.style.display = "block";
+
+    fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ eingabe: eingabe })
+    })
+    .then(response => response.json())
+    .then(data => {
+      chatOutput.value += `Du: ${eingabe}\nKI: ${data.antwort}\n\n`;
+      document.getElementById("user-input").value = "";
+      chatOutput.scrollTop = chatOutput.scrollHeight;
+
+      // Sound abspielen
+      document.getElementById("send-sound").play().catch(e => {
+        console.warn("Ton konnte nicht abgespielt werden:", e);
+      });
+    })
+    .catch(error => {
+      console.error("Fehler beim Senden der Anfrage:", error);
+      alert("Es gab ein Problem mit der Serververbindung.");
+    })
+    .finally(() => {
+      sendenButton.disabled = false;
+      loadingMsg.style.display = "none";
+      spinner.style.display = "none";
     });
+  });
+
+  // Schließen-Button für den Chat
+  document.getElementById("close-button").addEventListener("click", () => {
+    document.body.style.display = "none";
+  });
+
+  // Neue Sidebar-Logik
+  let sidebarExpanded = false;
+
+  const sidebar = document.getElementById("sidebar");
+  const header = sidebar.querySelector('.sidebar-header');
+
+  // Sidebar umschalten
+  function toggleSidebar() {
+    sidebar.classList.toggle("expanded");
+  }
+
+// Modelle laden
+window.addEventListener('DOMContentLoaded', () => {
+  // Sidebar beim Laden einfahren
+  sidebar.style.left = "0";
   
-    // Klick außerhalb → Sidebar schließen
-    document.addEventListener('click', function (e) {
-   if (sidebar.classList.contains("expanded") && !sidebar.contains(e.target)) {
-     sidebar.classList.remove("expanded");
-   }
+const AKTUELLES_MODELL = "{{ aktuelles_modell }}";
+
+  // Modelle abrufen
+fetch("/modelle")
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Netzwerkfehler: " + response.statusText);
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.modelle) {
+      const select = document.getElementById("modell");
+      // Liste leeren
+      select.innerHTML = "";
+      
+      // LLM-Modelle Gruppe (GGUF)
+      if (data.modelle.llm && data.modelle.llm.length > 0) {
+        const llmGroup = document.createElement("optgroup");
+        llmGroup.label = "LLM Modelle";
+        
+        data.modelle.llm.forEach(modell => {
+          const option = document.createElement("option");
+          option.value = modell;
+          option.textContent = modell;
+          llmGroup.appendChild(option);
+        });
+        
+        select.appendChild(llmGroup);
+      }
+      
+      if (data.modelle.sd && data.modelle.sd.length > 0) {
+        const sdGroup = document.createElement("optgroup");
+        sdGroup.label = "GGUF Modelle";
+        
+        data.modelle.sd.forEach(modell => {
+          const option = document.createElement("option");
+          option.value = modell;
+          option.textContent = modell;
+          sdGroup.appendChild(option);
+        });
+        
+        select.appendChild(sdGroup);
+      }
+      
+      // Wenn ein Modell aktuell geladen ist, das auswählen
+      if (AKTUELLES_MODELL) {
+        select.value = AKTUELLES_MODELL;
+      }
+    } else {
+      console.error("Keine Modelle im Datenobjekt gefunden.");
+    }
+  })
+  .catch(error => {
+    console.error("Fehler beim Abrufen der Modelle:", error);
+  });
+
+  // Modellauswahl-Formular absenden
+document.getElementById("modellForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const ausgewähltesModell = document.getElementById("modell").value;
+  
+  // Lade-Animation anzeigen
+  const loadingMsg = document.getElementById("loading-msg");
+  const spinner = document.getElementById("loading-spinner");
+  loadingMsg.style.display = "block";
+  spinner.style.display = "block";
+  
+  fetch("/modell", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ modell: ausgewähltesModell })
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.nachricht);
+    
+    // Diese Zeile aktualisiert die Anzeige des aktuellen Modells
+    document.getElementById("current-model").textContent = ausgewähltesModell;
+    
+    // Erfolg in Chat-Ausgabe anzeigen
+    const chatOutput = document.getElementById("chat-output");
+    chatOutput.value += `System: ${data.nachricht}\n\n`;
+    chatOutput.scrollTop = chatOutput.scrollHeight;
+  })
+  .catch(error => {
+    console.error("Fehler beim Laden des Modells:", error);
+    alert("Fehler beim Modellwechsel: " + error);
+  })
+  .finally(() => {
+    // Lade-Animation ausblenden
+    loadingMsg.style.display = "none";
+    spinner.style.display = "none";
+  });
 });
-  </script>
+});
+
+// Diese Funktion muss außerhalb anderer Funktionen definiert werden
+function closeInfo(nr) {
+  const info = document.getElementById(`info-${nr}`);
+  if (info) {
+    info.classList.remove('show');
+  }
+}
+
+// Der Rest des Event-Listener-Codes bleibt unverändert
+document.addEventListener('click', function (e) {
+  // Wenn der Sidebar-Button nicht geklickt wurde und die Sidebar offen ist
+  if (sidebar.classList.contains("expanded") && !sidebar.contains(e.target) && !document.getElementById("sidebar-toggle").contains(e.target)) {
+    sidebar.classList.remove("expanded");
+  }
+  });
+</script>
 </body>
 </html>
