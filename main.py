@@ -77,7 +77,7 @@ app = Flask(__name__)
 def index():
     try:
         modelle = finde_modelle()
-        return render_template('index.html', modelle=modelle)
+        return render_template('index.html', modelle=modelle, aktuelles_modell=AKTUELLES_MODELL)
     except Exception as e:
         logging.error(f"Fehler beim Abrufen der Modelle: {e}")
         return "Fehler beim Laden der Modelle", 500
@@ -101,18 +101,58 @@ def search():
     results = internet_suche(query)
     return jsonify({"ergebnisse": results})
 
+@app.route('/modelle')
+def get_modelle():
+    try:
+        alle_dateien = os.listdir(MODELL_VERZEICHNIS)
+        
+        # Nach Typ sortieren
+        gguf_modelle = [f for f in alle_dateien if f.endswith('.gguf')]
+        sd_modelle = [f for f in alle_dateien if f.endswith(('.ckpt', '.safetensors'))]
+        
+        # In Kategorien zusammenführen
+        modelle = {
+            "llm": gguf_modelle,  # LLM-Modelle (GGUF)
+            "sd": sd_modelle      # Stable Diffusion Modelle
+        }
+        
+        return jsonify({"modelle": modelle})
+    except Exception as e:
+        logging.error(f"Fehler beim Abrufen der Modelle: {e}")
+        return jsonify({"error": "Fehler beim Laden der Modelle", "modelle": {}}), 500
+        
+        
+        
+
 @app.route('/modell', methods=['POST'])
-def modell_wechseln():
+def wechsle_modell():
     global llm, AKTUELLES_MODELL
     try:
         data = request.json
-        modell_name = data.get("modell")
+        modell_name = data.get('modell', '')
+        
+        if not modell_name:
+            return jsonify({"fehler": "Kein Modellname angegeben"}), 400
+            
+        modell_pfad = os.path.join(MODELL_VERZEICHNIS, modell_name)
+        if not os.path.exists(modell_pfad):
+            return jsonify({"fehler": f"Modell {modell_name} nicht gefunden"}), 404
+            
+        # Altes Modell freigeben wenn vorhanden
+        if llm:
+            del llm
+            
+        # Neues Modell laden
         llm = lade_llm(modell_name)
-        AKTUELLES_MODELL = modell_name
-        return jsonify({"nachricht": f"✅ Modell '{modell_name}' erfolgreich geladen."})
+        if llm:
+            AKTUELLES_MODELL = modell_name
+            return jsonify({"nachricht": f"Modell {modell_name} erfolgreich geladen"})
+        else:
+            return jsonify({"fehler": f"Fehler beim Laden des Modells {modell_name}"}), 500
+            
     except Exception as e:
         logging.error(f"Fehler beim Modellwechsel: {e}")
-        return jsonify({"nachricht": f"❌ Fehler: {str(e)}"}), 500
+        return jsonify({"fehler": f"Fehler: {str(e)}"}), 500
 
 # ==== Funktionen ====
 def internet_suche(query):
