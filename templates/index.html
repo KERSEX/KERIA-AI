@@ -474,12 +474,9 @@ Letzte Aktualisierung: 08.05.2025</p>
   </div>
 
   <div class="model-selection-container">
-    <h3>Modellauswahl</h3>
-    <p>Aktuell geladenes Modell: <strong id="current-model">{{ aktuelles_modell }}</strong></p>
+    <p>Modellauswahl</p>
     <form id="modellForm">
-      <label for="modell">Modell wechseln:</label>
       <select id="modell" name="modell">
-        <!-- Wird dynamisch gefüllt -->
       </select>
       <button type="submit">Modell laden</button>
     </form>
@@ -639,16 +636,16 @@ document.getElementById("modellForm").addEventListener("submit", function(e) {
   })
   .then(response => response.json())
   .then(data => {
-    alert(data.nachricht);
-    
-    // Diese Zeile aktualisiert die Anzeige des aktuellen Modells
-    document.getElementById("current-model").textContent = ausgewähltesModell;
-    
-    // Erfolg in Chat-Ausgabe anzeigen
-    const chatOutput = document.getElementById("chat-output");
-    chatOutput.value += `System: ${data.nachricht}\n\n`;
-    chatOutput.scrollTop = chatOutput.scrollHeight;
-  })
+  alert(data.nachricht);
+  
+  // Aktuelles Modell in einer Variable speichern (statt DOM-Element)
+  window.AKTUELLES_MODELL = ausgewähltesModell;
+  
+  // Erfolg in Chat-Ausgabe anzeigen
+  const chatOutput = document.getElementById("chat-output");
+  chatOutput.value += `System: ${data.nachricht}\n\n`;
+  chatOutput.scrollTop = chatOutput.scrollHeight;
+})
   .catch(error => {
     console.error("Fehler beim Laden des Modells:", error);
     alert("Fehler beim Modellwechsel: " + error);
@@ -676,6 +673,16 @@ document.addEventListener('click', function (e) {
     sidebar.classList.remove("expanded");
   }
   });
+
+  document.addEventListener('DOMContentLoaded', function() {
+  const warningBanner = document.getElementById('warning-banner');
+  if (warningBanner) {
+    // Entfernen Sie vorhandene inline-Styles
+    warningBanner.style.display = 'flex';
+    warningBanner.style.visibility = 'visible';
+    warningBanner.style.opacity = '1';
+  }
+});
 </script>
 </body>
 </html>
