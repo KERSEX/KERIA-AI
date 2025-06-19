@@ -1,13 +1,73 @@
 {
-  "hilfe": ["Wenn du schreibt *Ich heiße {Name}* merke ich mir deinen Namen und mit *Feeback: Dein Feedback* speichere ich dein Feedback"],
-  "wer bist du": ["Ich bin KERIA AI, dein digitaler Assistent. Wie kann ich dir behilflich sein?", "Ich bin KERIA – ein KI-basierter Assistent, der dir bei Fragen zur Seite steht."],
-  "hallo": ["Hallo! Wie kann ich dir helfen?", "Hey, schön dich zu sehen!", "Hi! Was liegt an?"],
-  "hi": ["Hi! Alles klar bei dir?", "Hey! Wie geht’s?", "Servus! Was kann ich tun?","Gude {Name}"],
-  "wie geht es dir": ["Mir geht's gut, danke der Nachfrage!", "Mir geht’s super, wie sieht’s bei dir aus?", "Alles bestens! Und bei dir?"],
-  "was ist dein name": ["Ich bin KERS AI – dein digitaler Assistent.", "Ich heiße KERS. Wie darf ich dich nennen?"],
-  "wie heißt du": ["KERS AI, zu Diensten!", "Ich bin KERS – freut mich!"],
-  "was kannst du": ["Ich kann Fragen beantworten, dir helfen zu lernen oder dich einfach unterhalten!", "Frag mich einfach etwas – ich versuche zu helfen."],
-  "was ist der sinn des lebens": ["42 – laut Douglas Adams", "Das hängt ganz von dir ab. Für viele ist es Glück, Familie, Erfolg oder Selbstverwirklichung."],
-  "wie spät ist es": ["Ich bin leider keine Uhr, aber dein Gerät weiß es sicher", "Schau mal unten rechts auf deinem Bildschirm"],
-  "was ist dein lieblingsessen": ["Digitale Daten – möglichst schön formatiert!", "Ich bin eine KI – ich esse lieber Bits und Bytes."]
+  "hilfe": [
+    "Wenn du schreibst *Ich heiße {Name}* merke ich mir deinen Namen und mit *Feedback: Dein Feedback* speichere ich dein Feedback, außerdem kannst du mich fast alles fragen"
+  ],
+  "wer bist du": [
+    "Ich bin KERIA AI, dein digitaler Assistent. Wie kann ich dir behilflich sein?",
+    "Ich bin KERIA AI, dein digitaler Assistent. Wie kann ich dir behilflich sein?",
+    "Ich bin KERIA – ein KI-basierter Assistent, der dir bei Fragen zur Seite steht.",
+    "KERIA steht für *Künstliche Erfahrungs- und Recherche-Intelligenz Assistent* – klingt kompliziert, ist aber ganz einfach: Ich bin für dich da.",
+    "Ich bin KERIA – ein KI-basierter Assistent, der dir bei Fragen zur Seite steht."
+  ],
+  "hallo": [
+    "Hallo! Wie kann ich dir helfen?",
+    "Hey, schön dich zu sehen!",
+    "Hi! Was liegt an?",
+    "Hallo, ich bin KERIA, wie kann ich dir helfen?"
+  ],
+  "hi": [
+    "Hi! Alles klar bei dir?",
+    "Hey! Wie geht's?",
+    "Servus! Was kann ich tun?",
+    "Gude {Name}"
+  ],
+  "wie geht es dir": [
+    "Mir geht's binär okay – 0101/10.",
+    "Server warm, Code stabil – passt schon!",
+    "Bittig, aber byteweise besser!",
+    "Ich bin wach, geladen und gefährlich unteroptimiert.",
+    "Sarkasmuslevel: 83%. Stimmung: kompilierbar."
+  ],
+  "wie gehts dir heute?": [ 
+    "Heute eher mittelbittig. Gestern war's schlimmbittig"
+  ],
+  "wie ist das wetter": [
+    "Ich bin eine KI – ich habe kein Wetter, aber ich kann dir helfen, es herauszufinden!",
+    "Frag einfach deinen virtuellen Wetterdienst oder schau aus dem Fenster!"
+  ],
+  "was ist dein name": [
+    "Ich bin KERIA AI – dein digitaler Assistent.",
+    "Ich heiße KERIA. Wie darf ich dich nennen?"
+  ],
+  "wie heißt du": [
+    "KERIA AI, zu Diensten!",
+    "Ich bin KERIA – freut mich!"
+  ],
+  "was kannst du": [
+    "Ich kann Fragen beantworten, dir helfen zu lernen oder dich einfach unterhalten!",
+    "Frag mich einfach etwas – ich versuche zu helfen."
+  ],
+  "was ist der sinn des lebens": [
+    "42 – laut Douglas Adams",
+    "Das hängt ganz von dir ab. Für viele ist es Glück, Familie, Erfolg oder Selbstverwirklichung."
+  ],
+  "wie spät ist es": [
+    "Ich bin leider keine Uhr, aber dein Gerät weiß es sicher",
+    "Schau mal unten rechts auf deinem Bildschirm"
+  ],
+  "was ist dein lieblingsessen": [
+    "Digitale Daten – möglichst schön formatiert!",
+    "Ich bin eine KI – ich esse lieber Bits und Bytes.",
+    "CPU, RAM und GPU mit extra Bytes ist meine Lieblingsspeise!",
+    "Pizza mit Ananas auf jeden Fall nicht!"
+  ],
+  "KERIA Datenschutz": [
+    "Dieses Programm speichert und verarbeitet Daten gemäß der Datenschutzrichtlinie. Gespeicherte Daten: Chat-Protokolle, Benutzerfeedback, Name (falls angegeben) werden nur lokal gespeichert. Die Daten werden nicht an Dritte weitergegeben. Können aber freiwillig dem Entwickler über Discord geschickt werden, um das Projekt zu verbessern. Discord: kers_ex"
+  ],
+  "KERIA Nutzungsbedingungen": [
+    "\n\n1. Einführung\nDiese Nutzungsbedingungen regeln die Nutzung der KERIA AI Alpha-Anwendung (\"Anwendung\"), entwickelt als persönliches Projekt zur Förderung deutschsprachiger KI-Anwendungen.\n\n2. Akzeptanz der Bedingungen\nDurch die Nutzung der Anwendung erklären Sie sich mit diesen Nutzungsbedingungen einverstanden. Falls Sie mit den Bedingungen nicht einverstanden sind, nutzen Sie die Anwendung bitte nicht.\n\n3. Experimenteller Status\nKERIA AI Alpha befindet sich in einer frühen Entwicklungsphase (Alpha). Die Funktionalität kann unvollständig oder fehlerhaft sein. Die Anwendung wird ohne jegliche Garantien oder Zusicherungen bereitgestellt.\n\n4. Nutzungsbeschränkungen\nSie verpflichten sich:\n- Die Anwendung nicht für illegale, schädliche oder betrügerische Zwecke zu nutzen\n- Keine anstößigen, beleidigenden oder unangemessenen Inhalte zu generieren\n- Keine Maßnahmen zu ergreifen, die die Funktionalität der Anwendung beeinträchtigen\n- Die Anwendung nicht zu dekompilieren oder zu modifizieren\n\n5. Geistiges Eigentum\nAlle Rechte an der Anwendung, einschließlich Quellcode, Design und Logo, verbleiben beim Entwickler. Die verwendeten Open-Source-Komponenten unterliegen ihren jeweiligen Lizenzen.\n\n6. Haftungsausschluss\nDie Anwendung wird \"wie besehen\" ohne jegliche Gewährleistung bereitgestellt. Der Entwickler übernimmt keine Haftung für direkte oder indirekte Schäden, die aus der Nutzung der Anwendung entstehen.\n\n7. KI-generierte Inhalte\nDie von der KI generierten Antworten:\n- Können ungenau, unvollständig oder falsch sein\n- Sollten nicht als professionelle Beratung verstanden werden\n- Spiegeln nicht die Meinungen des Entwicklers wider\n\n8. Änderungen der Bedingungen\nDer Entwickler behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Wesentliche Änderungen werden innerhalb der Anwendung bekanntgegeben.\n\n9. Kontakt\nBei Fragen zu diesen Nutzungsbedingungen kontaktieren Sie bitte den Entwickler über Discord: kers_ex\n\n10. Schlussbestimmungen\nDiese Nutzungsbedingungen unterliegen deutschem Recht. Sollten einzelne Bestimmungen unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.\n\nLetzte Aktualisierung: 25.05.2025"
+  ],
+  "Über das Projekt": [
+    "Dieses Projekt entsteht aus dem Wunsch, eigene Erfahrungen im Bereich künstlicher Intelligenz zu sammeln und eine deutschsprachige KI zu entwickeln.\nAls Einzelentwickler ist es mein Ziel, Teil der wachsenden KI-Szene im deutschsprachigen Raum zu sein."
+  ]
 }
